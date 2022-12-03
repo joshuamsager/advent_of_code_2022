@@ -24,6 +24,8 @@ fn part_one(filepath: &str) -> i32 {
     let file = File::open(filepath).unwrap();
     let reader = BufReader::new(file);
 
+    let alphabet: Vec<char> = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ".chars().collect();
+
     for line in reader.lines() {
         let line = line.unwrap();
 
@@ -36,7 +38,6 @@ fn part_one(filepath: &str) -> i32 {
 
         let m = intersection.next().unwrap();
 
-        let alphabet: Vec<char> = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ".chars().collect();
 
         let pos = i32::try_from(alphabet.iter().position(|&r| r == *m).unwrap()).unwrap();
 
@@ -52,6 +53,8 @@ fn part_two(filepath: &str) -> i32 {
     let file = File::open(filepath).unwrap();
     let reader = BufReader::new(file);
 
+    let alphabet: Vec<char> = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ".chars().collect();
+
     for lines in &reader.lines().chunks(3) {
         let mut iter = lines.enumerate();
         let first = iter.next();
@@ -66,7 +69,6 @@ fn part_two(filepath: &str) -> i32 {
             base = base.intersection(&set).cloned().collect();
         }
 
-        let alphabet: Vec<char> = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ".chars().collect();
         let m = base.iter().next().unwrap();
 
         let pos = i32::try_from(alphabet.iter().position(|&r| r == *m).unwrap()).unwrap();
