@@ -3,6 +3,7 @@ use std::fs::File;
 use std::io::{prelude::*, BufReader};
 use itertools::Itertools;
 use regex::Regex;
+use std::time::Instant;
 
 fn main() {
     let args: Vec<String> = env::args().collect();
@@ -10,11 +11,15 @@ fn main() {
 
     let filepath: &str = &args[1];
 
+    let timer = Instant::now();
     let sol1 = part_one(filepath);
-    println!("Challenge 1: {}", sol1);
+    let elapsed = timer.elapsed();
+    println!("Challenge 1: {}, elapsed: {} ms", sol1, elapsed.as_millis());
 
+    let timer = Instant::now();
     let sol2 = part_two(filepath);
-    println!("Challenge 2: {}", sol2);
+    let elapsed = timer.elapsed();
+    println!("Challenge 2: {}, elapsed: {} ms", sol2, elapsed.as_millis());
 }
 
 fn part_one(filepath: &str) -> String {
@@ -32,8 +37,7 @@ fn part_one(filepath: &str) -> String {
 
         let chars = line.chars().chunks(4);
         let crates = chars.into_iter()
-            .map(|c| c.collect_vec()[1])
-            .filter(|c| !c.is_ascii_digit());
+            .map(|c| c.collect_vec()[1]);
 
         for (i, c) in crates.enumerate() {
             if lines.len() <= i {
@@ -48,10 +52,9 @@ fn part_one(filepath: &str) -> String {
         }
     }
 
+    let re = Regex::new(r"move (\d+) from (\d+) to (\d+)").unwrap();
     for line in reader.lines() {
         let line = line.unwrap();
-
-        let re = Regex::new(r"move (\d+) from (\d+) to (\d+)").unwrap();
         let caps = re.captures(&line).unwrap();
 
         let times = caps.get(1).unwrap().as_str().parse::<usize>().unwrap();
@@ -86,8 +89,7 @@ fn part_two(filepath: &str) -> String {
 
         let chars = line.chars().chunks(4);
         let crates = chars.into_iter()
-            .map(|c| c.collect_vec()[1])
-            .filter(|c| !c.is_ascii_digit());
+            .map(|c| c.collect_vec()[1]);
 
         for (i, c) in crates.enumerate() {
             if lines.len() <= i {
@@ -102,10 +104,10 @@ fn part_two(filepath: &str) -> String {
         }
     }
 
+    let re = Regex::new(r"move (\d+) from (\d+) to (\d+)").unwrap();
     for line in reader.lines() {
         let line = line.unwrap();
 
-        let re = Regex::new(r"move (\d+) from (\d+) to (\d+)").unwrap();
         let caps = re.captures(&line).unwrap();
 
         let times = caps.get(1).unwrap().as_str().parse::<usize>().unwrap();
