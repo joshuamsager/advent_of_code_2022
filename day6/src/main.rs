@@ -35,7 +35,6 @@ fn part_one(filepath: &str) -> usize {
         for window in chars.windows(4) {
             let set: HashSet<&char> = HashSet::from_iter(window);
             if set.len() == 4 {
-                dbg!(window);
                 return i+4;
             }
             i+=1;
@@ -59,7 +58,6 @@ fn part_two(filepath: &str) -> usize {
         for window in chars.windows(14) {
             let set: HashSet<&char> = HashSet::from_iter(window);
             if set.len() == 14 {
-                dbg!(window);
                 return i+14;
             }
             i+=1;
